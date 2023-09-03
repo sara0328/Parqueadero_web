@@ -23,11 +23,6 @@ public class PisoController {
         return pisoService.obtenerPiso(id);
     }
 
-    @PostMapping
-    public Piso crearPiso(@RequestBody Piso piso) {
-        return pisoService.crearPiso(piso);
-    }
-
     @PutMapping("/{id}")
     public Piso actualizarPiso(@PathVariable Long id, @RequestBody Piso piso) {
         piso.setId(id);
@@ -48,4 +43,10 @@ public class PisoController {
     public Piso calcularEspaciosDisponibles(@PathVariable Long id, @RequestParam int espaciosOcupados) {
         return pisoService.calcularEspaciosDisponibles(id, espaciosOcupados);
     }
+    @PostMapping("/pisos")
+    public Piso crearPiso(@RequestBody Piso piso) {
+    return pisoService.crearPiso(piso.getCapacidadTotal(), piso.getTarifa());
+    }
+    
 }
+

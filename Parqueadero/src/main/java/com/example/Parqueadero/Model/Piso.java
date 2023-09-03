@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Piso {
@@ -14,8 +16,40 @@ public class Piso {
     private String tipoVehiculo;
     private int espaciosTotales;
     private int espaciosDisponibles;
+    private int capacidadTotal;
+
+    public Piso() {
+    }
+
+    // un constructor con argumentos
+    public Piso(Long id) {
+        this.id = id;
+    }
+    
+    public Piso(int capacidadTotal) {
+        this.capacidadTotal = capacidadTotal;
+    }
+
+    public void setCapacidadTotal(int capacidadTotal) {
+        this.capacidadTotal = capacidadTotal;
+    }
+    @ManyToOne
+    @JoinColumn(name = "tarifa_id")
+    private Tarifa tarifa;
 
     // getters y setters
+
+    public Piso(Tarifa tarifa) {
+        this.tarifa = tarifa;
+    }
+
+    public Tarifa getTarifa() {
+        return tarifa;
+    }
+
+    public void setTarifa(Tarifa tarifa) {
+        this.tarifa = tarifa;
+    }
 
     public Long getId() {
         return id;
@@ -48,5 +82,9 @@ public class Piso {
     public void setEspaciosDisponibles(int espaciosDisponibles) {
         this.espaciosDisponibles = espaciosDisponibles;
     }
+    public Integer getCapacidadTotal() {
+        return capacidadTotal;
+    }
+
 }
 

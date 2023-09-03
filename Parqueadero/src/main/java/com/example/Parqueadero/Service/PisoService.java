@@ -1,6 +1,7 @@
 package com.example.Parqueadero.Service;
 
 import com.example.Parqueadero.Model.Piso;
+import com.example.Parqueadero.Model.Tarifa;
 import com.example.Parqueadero.Repository.PisoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class PisoService {
     public List<Piso> obtenerPisos() {
         return pisoRepository.findAll();
     }
+
 
     public Piso obtenerPiso(Long id) {
         Optional<Piso> piso = pisoRepository.findById(id);
@@ -49,5 +51,13 @@ public class PisoService {
         int espaciosDisponibles = piso.getEspaciosTotales() - espaciosOcupados;
         piso.setEspaciosDisponibles(espaciosDisponibles);
         return pisoRepository.save(piso);
+    }
+
+    public Piso crearPiso(Integer capacidadTotal, Tarifa tarifa) {
+    Piso piso = new Piso();
+    piso.setCapacidadTotal(capacidadTotal);
+    piso.setEspaciosDisponibles(capacidadTotal);
+    piso.setTarifa(tarifa);
+    return pisoRepository.save(piso);   
     }
 }
