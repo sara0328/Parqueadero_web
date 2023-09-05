@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -15,7 +16,14 @@ public class PisoController {
     @Autowired
     private PisoService pisoService;
 
-    @GetMapping
+    @GetMapping("/")
+    public ModelAndView viewHomePage() {
+        ModelAndView personView = new ModelAndView("index");
+        personView.addObject("allpisoslist", pisoService.obtenerPisos());
+        return personView;
+    }
+
+    @GetMapping("/all")
     public List<Piso> obtenerPisos() {
         return pisoService.obtenerPisos();
     }
