@@ -19,13 +19,9 @@ public class PisoService {
         return pisoRepository.findAll();
     }
 
-
     public Piso obtenerPiso(Long id) {
         Optional<Piso> piso = pisoRepository.findById(id);
-        if (!piso.isPresent()) {
-            // manejar error, por ejemplo lanzar una excepción
-        }
-        return piso.get();
+        return piso.orElse(null);
     }
 
     public Piso crearPiso(Piso piso) {
@@ -36,28 +32,41 @@ public class PisoService {
         return pisoRepository.save(piso);
     }
 
-    public void eliminarPiso(Long id) {
-        pisoRepository.deleteById(id);
-    }
-
-    public Piso especificarTipoVehiculo(Long id, String tipoVehiculo) {
-        Piso piso = obtenerPiso(id);
-        piso.setTipoVehiculo(tipoVehiculo);
-        return pisoRepository.save(piso);
+    public boolean eliminarPiso(Long id) {
+        if(pisoRepository.existsById(id)) {
+            pisoRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public Piso calcularEspaciosDisponibles(Long id, int espaciosOcupados) {
         Piso piso = obtenerPiso(id);
-        int espaciosDisponibles = piso.getEspaciosTotales() - espaciosOcupados;
-        piso.setEspaciosDisponibles(espaciosDisponibles);
-        return pisoRepository.save(piso);
+        if (piso != null) {
+            int espaciosDisponibles = piso.getCapacidadMaxima() - espaciosOcupados;
+    
+            // Actualizar la cantidad de espacios disponibles en el objeto piso
+            piso.setEspaciosDisponibles(espaciosDisponibles); 
+    
+            // Aquí podrías actualizar la lista de vehículos en el piso en función 
+            // de los espacios ocupados, según la lógica de tu negocio
+    
+            return pisoRepository.save(piso);
+        }
+        return null;
     }
+    
 
     public Piso crearPiso(Integer capacidadTotal, Tarifa tarifa) {
-    Piso piso = new Piso();
-    piso.setCapacidadTotal(capacidadTotal);
-    piso.setEspaciosDisponibles(capacidadTotal);
-    piso.setTarifa(tarifa);
-    return pisoRepository.save(piso);   
+        Piso piso = new Piso();
+        piso.setCapacidadTotal(capacidadTotal);
+        piso.setCapacidadMaxima(capacidadTotal); // Asumo que la capacidad máxima inicialmente es igual a la capacidad total.
+        piso.setTarifa(tarifa);
+        return pisoRepository.save(piso);   
+    }
+
+    public Piso getPisoById(Long id) {
+        return obtenerPiso(id); // Simplificado para utilizar el método obtenerPiso
     }
 }

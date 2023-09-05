@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Vehiculo {
@@ -13,6 +14,9 @@ public class Vehiculo {
     private Long id;
     private String tipo; // AUTOMOVIL, BUS, MOTO
     private String descripcion;
+
+    @ManyToOne
+    private Piso piso;
 
     public Vehiculo() {
         // Constructor por defecto
@@ -29,9 +33,6 @@ public class Vehiculo {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getTipo() {
         return tipo;

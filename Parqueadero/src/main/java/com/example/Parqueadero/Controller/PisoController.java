@@ -2,6 +2,8 @@ package com.example.Parqueadero.Controller;
 import com.example.Parqueadero.Model.Piso;
 import com.example.Parqueadero.Service.PisoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,11 +36,6 @@ public class PisoController {
         pisoService.eliminarPiso(id);
     }
 
-    @PutMapping("/{id}/tipoVehiculo")
-    public Piso especificarTipoVehiculo(@PathVariable Long id, @RequestParam String tipoVehiculo) {
-        return pisoService.especificarTipoVehiculo(id, tipoVehiculo);
-    }
-
     @PutMapping("/{id}/espaciosDisponibles")
     public Piso calcularEspaciosDisponibles(@PathVariable Long id, @RequestParam int espaciosOcupados) {
         return pisoService.calcularEspaciosDisponibles(id, espaciosOcupados);
@@ -48,5 +45,15 @@ public class PisoController {
     return pisoService.crearPiso(piso.getCapacidadTotal(), piso.getTarifa());
     }
     
+    @GetMapping("/{id}/espaciosDisponibles")
+    public ResponseEntity<Integer> getEspaciosDisponibles(@PathVariable Long id) {
+    Piso piso = pisoService.getPisoById(id);
+    if (piso != null) {
+        return ResponseEntity.ok(piso.getEspaciosDisponibles());
+    } else {
+        // Lanzar una excepción o retornar un código de error
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
+    }
 }
 

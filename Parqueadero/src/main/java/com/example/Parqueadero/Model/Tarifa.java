@@ -1,5 +1,6 @@
 package com.example.Parqueadero.Model;
 
+import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -11,18 +12,18 @@ public class Tarifa {
     @Id
     private Long id;
     
-    @ManyToOne
-    @JoinColumn(name = "vehiculo_id", nullable = false)
-    private Vehiculo vehiculo;
-
+    @NonNull
+    private String tipoVehiculo; // Por ejemplo: "AUTO", "MOTO", etc.
+    
+    @NonNull
     private Double tarifaPorMinuto;
 
     public Tarifa() {
     }
 
-    public Tarifa(Long id, Vehiculo vehiculo, Double tarifaPorMinuto) {
+    public Tarifa(Long id, String tipoVehiculo, Double tarifaPorMinuto) {
         this.id = id;
-        this.vehiculo = vehiculo;
+        this.tipoVehiculo = tipoVehiculo;
         this.tarifaPorMinuto = tarifaPorMinuto;
     }
 
@@ -34,12 +35,12 @@ public class Tarifa {
         this.id = id;
     }
 
-    public Vehiculo getVehiculo() {
-        return vehiculo;
+    public String getTipoVehiculo() {
+        return tipoVehiculo;
     }
 
-    public void setVehiculo(Vehiculo vehiculo) {
-        this.vehiculo = vehiculo;
+    public void setTipoVehiculo(String tipoVehiculo) {
+        this.tipoVehiculo = tipoVehiculo;
     }
 
     public Double getTarifaPorMinuto() {
@@ -54,7 +55,7 @@ public class Tarifa {
     public String toString() {
         return "Tarifa{" +
                 "id=" + id +
-                ", vehiculo=" + vehiculo +
+                ", tipoVehiculo='" + tipoVehiculo + '\'' +
                 ", tarifaPorMinuto=" + tarifaPorMinuto +
                 '}';
     }
