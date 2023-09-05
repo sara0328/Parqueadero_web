@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -33,13 +34,27 @@ public class PisoController {
         return pisoService.obtenerPiso(id);
     }
 
+    @GetMapping("/crear")
+    public ModelAndView crearPiso() {
+        Piso piso = new Piso();
+        ModelAndView pisoCreateView = new ModelAndView("crear");
+        pisoCreateView.addObject("piso", piso);
+        return pisoCreateView;
+    }
+
+    @PostMapping("/guardar")
+    public RedirectView guardarPiso (@ModelAttribute("piso") Piso piso) {
+        pisoService.crearPiso(piso);
+        return new RedirectView("/api/pisos/");
+    }
+
     @PutMapping("/{id}")
     public Piso actualizarPiso(@PathVariable Long id, @RequestBody Piso piso) {
         piso.setId(id);
         return pisoService.actualizarPiso(piso);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public void eliminarPiso(@PathVariable Long id) {
         pisoService.eliminarPiso(id);
     }
