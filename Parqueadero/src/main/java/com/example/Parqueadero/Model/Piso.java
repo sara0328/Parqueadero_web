@@ -16,6 +16,7 @@ public class Piso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long numeroPiso;
     private int espaciosTotales;
     private int capacidadTotal;
     private Integer capacidadMaxima; // Nueva propiedad
@@ -27,8 +28,9 @@ public class Piso {
     private List<Vehiculo> vehiculos;  // Lista de vehículos en este piso
 
     // Constructor con todos los campos necesarios
-    public Piso(Long id, int espaciosTotales, int capacidadTotal, Integer capacidadMaxima, Tarifa tarifa) {
+    public Piso(Long id, Long numeroPiso, int espaciosTotales, int capacidadTotal, Integer capacidadMaxima, Tarifa tarifa) {
         this.id = id;
+        this.numeroPiso = numeroPiso;
         this.espaciosTotales = espaciosTotales;
         this.capacidadTotal = capacidadTotal;
         this.capacidadMaxima = capacidadMaxima;
@@ -43,7 +45,15 @@ public class Piso {
     public Piso(Long id) {
         this.id = id;
     }
-    
+
+    public Long getNumeroPiso() {
+        return numeroPiso;
+    }
+
+    public void setNumeroPiso(Long numeroPiso) {
+        this.numeroPiso = numeroPiso;
+    }
+
     public Piso(int capacidadTotal) {
         this.capacidadTotal = capacidadTotal;
     }
@@ -89,7 +99,7 @@ public class Piso {
     public int getEspaciosTotales() {
         return espaciosTotales;
     }
-    
+
     public void setEspaciosTotales(int espaciosTotales) {
         this.espaciosTotales = espaciosTotales;
     }
@@ -97,10 +107,11 @@ public class Piso {
     public void setEspaciosDisponibles(int espaciosDisponibles) {
         this.espaciosDisponibles = espaciosDisponibles;
     }
-    
 
     public Integer getEspaciosDisponibles() {
-        return espaciosTotales - (vehiculos != null ? vehiculos.size() : 0);
+        return this.espaciosDisponibles;
+
+        //return espaciosTotales - (vehiculos != null ? vehiculos.size() : 0);
     }
 }
 

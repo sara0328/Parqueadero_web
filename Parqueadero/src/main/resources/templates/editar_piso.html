@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Parqueadero - Modificar piso</title>
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>Parqueadero</h1>
+    <hr>
+    <h2>Modificar piso</h2>
+
+    <form action="#" th:action="@{/api/pisos/update}" th:object="${piso}"
+          method="POST">
+
+        <input type="hidden" th:field="*{id}"/>
+        <label>Número del piso:</label>
+        <input type="text" th:field="*{numeroPiso}" class="form-control mb-4 col-4">
+        <label>Espacios totales del piso:</label>
+        <input type="text" th:field="*{espaciosTotales}" class="form-control mb-4 col-4">
+        <label>Espacios disponibles del piso:</label>
+        <input type="text" th:field="*{espaciosDisponibles}" class="form-control mb-4 col-4">
+        <label>Tipo de vehiculo:</label>
+        <select name="tipoVehiculo" class="form-control mb-4 col-4" th:field="*{tarifa.tipoVehiculo}">
+            <option th:each="tipoOpt : ${tiposVehiculos}"
+                    th:value="${tipoOpt.getTipoVehiculo()}"
+                    th:text="${tipoOpt.getTipoVehiculo()}">
+            </option>
+        </select>
+
+        <button type="submit" class="btn btn-info col-2">Actualizar piso</button>
+    </form>
+
+    <hr>
+
+    <a th:href="@{/api/pisos/}">Volver a la lista de pisos</a>
+</div>
+</body>
+</html>

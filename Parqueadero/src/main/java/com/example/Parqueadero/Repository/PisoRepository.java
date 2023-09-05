@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PisoRepository extends JpaRepository<Piso, Long> {
+    boolean existsPisoByNumeroPiso(Long numeroPiso);
 }

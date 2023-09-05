@@ -31,13 +31,20 @@ public class PisoService {
         if (!tarifaRepository.existsTarifaByTipoVehiculo(piso.getTarifa().getTipoVehiculo())) {
             return;
         }
+        if (pisoRepository.existsPisoByNumeroPiso(piso.getNumeroPiso())) {
+            return;
+        }
         Tarifa tarifa = tarifaRepository.findTarifaByTipoVehiculo(piso.getTarifa().getTipoVehiculo());
         piso.setTarifa(tarifa);
+        piso.setEspaciosDisponibles(piso.getEspaciosTotales());
         pisoRepository.save(piso);
     }
 
-    public Piso actualizarPiso(Piso piso) {
-        return pisoRepository.save(piso);
+    public void actualizarPiso(Piso piso) {
+        Tarifa tarifa = tarifaRepository.findTarifaByTipoVehiculo(piso.getTarifa().getTipoVehiculo());
+        piso.setTarifa(tarifa);
+        System.out.println(piso.getEspaciosDisponibles());
+        pisoRepository.save(piso);
     }
 
     public boolean eliminarPiso(Long id) {

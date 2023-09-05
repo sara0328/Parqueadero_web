@@ -56,10 +56,19 @@ public class PisoController {
         return new RedirectView("/api/pisos/");
     }
 
-    @PutMapping("/{id}")
-    public Piso actualizarPiso(@PathVariable Long id, @RequestBody Piso piso) {
-        piso.setId(id);
-        return pisoService.actualizarPiso(piso);
+    @GetMapping("/actualizar/{id}")
+    public ModelAndView vistaActualizar(@PathVariable Long id) {
+        Piso piso = pisoService.getPisoById(id);
+        ModelAndView actualizarPisoView = new ModelAndView("editar_piso");
+        actualizarPisoView.addObject("piso", piso);
+        actualizarPisoView.addObject("tiposVehiculos", tarifaService.getAllTarifas());
+        return actualizarPisoView;
+    }
+
+    @PostMapping("/update")
+    public RedirectView actualizarPiso(@ModelAttribute("piso") Piso piso) {
+        pisoService.actualizarPiso(piso);
+        return new RedirectView("/api/pisos/");
     }
 
     @GetMapping("/eliminar/{id}")
