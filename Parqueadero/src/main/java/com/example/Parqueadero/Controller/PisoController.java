@@ -1,7 +1,10 @@
 package com.example.Parqueadero.Controller;
 import com.example.Parqueadero.Model.Piso;
+import com.example.Parqueadero.Model.Tarifa;
 import com.example.Parqueadero.Model.TipoVehiculo;
 import com.example.Parqueadero.Service.PisoService;
+import com.example.Parqueadero.Service.TarifaService;
+import com.example.Parqueadero.data.ListadoTarifas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +20,14 @@ public class PisoController {
 
     @Autowired
     private PisoService pisoService;
+    @Autowired
+    private TarifaService tarifaService;
 
     @GetMapping("/")
     public ModelAndView viewHomePage() {
         ModelAndView personView = new ModelAndView("index");
         personView.addObject("allpisoslist", pisoService.obtenerPisos());
+        personView.addObject("alltarifalist", tarifaService.getAllTarifas());
         return personView;
     }
 
@@ -40,7 +46,7 @@ public class PisoController {
         Piso piso = new Piso();
         ModelAndView pisoCreateView = new ModelAndView("crear_piso");
         pisoCreateView.addObject("piso", piso);
-        pisoCreateView.addObject("tiposVehiculos", TipoVehiculo.values());
+        pisoCreateView.addObject("tiposVehiculos", tarifaService.getAllTarifas());
         return pisoCreateView;
     }
 
@@ -56,9 +62,10 @@ public class PisoController {
         return pisoService.actualizarPiso(piso);
     }
 
-    @DeleteMapping("/eliminar/{id}")
-    public void eliminarPiso(@PathVariable Long id) {
+    @GetMapping("/eliminar/{id}")
+    public RedirectView eliminarPiso(@PathVariable Long id) {
         pisoService.eliminarPiso(id);
+        return new RedirectView("/api/pisos/");
     }
 
     @PutMapping("/{id}/espaciosDisponibles")

@@ -2,11 +2,14 @@ package com.example.Parqueadero.Model;
 
 import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class Tarifa {
 
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
     
@@ -20,10 +23,14 @@ public class Tarifa {
         tipoVehiculo = TipoVehiculo.NINGUNO;
     }
 
-    public Tarifa(Long id, String tipoVehiculo, Double tarifaPorMinuto) {
+    public Tarifa(Long id, TipoVehiculo tipoVehiculo, Double tarifaPorMinuto) {
         this.id = id;
-        this.tipoVehiculo = TipoVehiculo.valueOf(tipoVehiculo.toUpperCase());
+        this.tipoVehiculo = tipoVehiculo;
         this.tarifaPorMinuto = tarifaPorMinuto;
+    }
+
+    public Tarifa (TipoVehiculo tipoVehiculo) {
+        this.tipoVehiculo = tipoVehiculo;
     }
 
     public Long getId() {
@@ -34,12 +41,12 @@ public class Tarifa {
         this.id = id;
     }
 
-    public String getTipoVehiculo() {
-        return tipoVehiculo.toString();
+    public TipoVehiculo getTipoVehiculo() {
+        return tipoVehiculo;
     }
 
-    public void setTipoVehiculo(String tipoVehiculo) {
-        this.tipoVehiculo = TipoVehiculo.valueOf(tipoVehiculo.toUpperCase());
+    public void setTipoVehiculo(TipoVehiculo tipoVehiculo) {
+        this.tipoVehiculo = tipoVehiculo;
     }
 
     public Double getTarifaPorMinuto() {

@@ -13,13 +13,14 @@
 
     <h3>Lista de pisos</h3>
     <a th:href="@{/api/pisos/crear}" class="btn btn-primary btn-sm mb-3" >Crear Piso</a>
-    <a th:href="@{/api/tarifas}" class="btn btn-primary btn-sm mb-3" >Crear tarifa</a>
+    <a th:href="@{/api/tarifas/crear}" class="btn btn-primary btn-sm mb-3" >Crear tarifa</a>
     <table style="width:80%" border="1"
            class = "table table-striped table-responsive-md">
         <thead>
         <tr>
             <th>ID</th>
             <th>Tipo de vehiculo</th>
+            <th>Precio por minuto</th>
             <th>Espacios totales</th>
             <th>Acciones</th>
         </tr>
@@ -28,12 +29,32 @@
         <tr th:each="piso:${allpisoslist}">
             <td th:text="${piso.id}"></td>
             <td th:text="${piso.tarifa.tipoVehiculo}"></td>
+            <td th:text="${piso.tarifa.getTarifaPorMinuto()}"></td>
             <td th:text="${piso.espaciosTotales}"></td>
             <td> <a th:href="@{/obtenerPiso/{id}(id=${piso.id})}"
-                    class="btn btn-primary">Update</a>
-                <a th:href="@{/eliminarPiso/{id}(id=${piso.id})}"
-                   class="btn btn-danger">Delete</a>
+                    class="btn btn-primary">Actualizar</a>
+                <a th:href="@{/api/pisos/eliminar/{id}(id=${piso.id})}"
+                   class="btn btn-danger">Eliminar</a>
             </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3>Lista de tarifas</h3>
+    <table style="width:70%" border="1"
+           class = "table table-striped table-responsive-md">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tipo de vehiculo</th>
+            <th>Precio por minuto</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="tarifa:${alltarifalist}">
+            <td th:text="${tarifa.id}"></td>
+            <td th:text="${tarifa.getTipoVehiculo()}"></td>
+            <td th:text="${tarifa.getTarifaPorMinuto()}"></td>
         </tr>
         </tbody>
     </table>

@@ -3,6 +3,7 @@ package com.example.Parqueadero.Service;
 import com.example.Parqueadero.Model.Piso;
 import com.example.Parqueadero.Model.Tarifa;
 import com.example.Parqueadero.Repository.PisoRepository;
+import com.example.Parqueadero.Repository.TarifaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,8 @@ public class PisoService {
 
     @Autowired
     private PisoRepository pisoRepository;
+    @Autowired
+    private TarifaRepository tarifaRepository;
 
     public List<Piso> obtenerPisos() {
         return pisoRepository.findAll();
@@ -24,8 +27,13 @@ public class PisoService {
         return piso.orElse(null);
     }
 
-    public Piso crearPiso(Piso piso) {
-        return pisoRepository.save(piso);
+    public void crearPiso(Piso piso) {
+        if (!tarifaRepository.existsTarifaByTipoVehiculo(piso.getTarifa().getTipoVehiculo())) {
+            return;
+        }
+        Tarifa tarifa = tarifaRepository.findTarifaByTipoVehiculo(piso.getTarifa().getTipoVehiculo());
+        piso.setTarifa(tarifa);
+        pisoRepository.save(piso);
     }
 
     public Piso actualizarPiso(Piso piso) {

@@ -26,8 +26,8 @@
         <label> Tipo de vehiculo: </label>
         <select name="tipoVehiculo" class="form-control mb-4 col-4" th:field="*{tarifa.tipoVehiculo}">
             <option th:each="tipoOpt : ${tiposVehiculos}"
-                    th:value="${tipoOpt}"
-                    th:text="${tipoOpt}">
+                    th:value="${tipoOpt.getTipoVehiculo()}"
+                    th:text="${tipoOpt.getTipoVehiculo()}">
             </option>
         </select>
 
@@ -38,7 +38,7 @@
 
     <hr>
 
-    <a th:href="@{api/pisos/}"> Volver a la lista de pisos</a>
+    <a th:href="@{/api/pisos/}"> Volver a la lista de pisos</a>
 </div>
 </body>
 </html>
