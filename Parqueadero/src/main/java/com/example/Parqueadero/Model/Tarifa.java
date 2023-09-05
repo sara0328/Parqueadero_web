@@ -17,7 +17,7 @@ public class Tarifa {
     private Double tarifaPorMinuto;
 
     public Tarifa() {
-
+        tipoVehiculo = TipoVehiculo.NINGUNO;
     }
 
     public Tarifa(Long id, String tipoVehiculo, Double tarifaPorMinuto) {
