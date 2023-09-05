@@ -1,6 +1,8 @@
 package com.example.Parqueadero.Model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Id;
 
 @Entity
@@ -8,15 +10,19 @@ public class Tarifa {
 
     @Id
     private Long id;
-    private String tipoVehiculo;
+    
+    @ManyToOne
+    @JoinColumn(name = "vehiculo_id", nullable = false)
+    private Vehiculo vehiculo;
+
     private Double tarifaPorMinuto;
 
     public Tarifa() {
     }
 
-    public Tarifa(Long id, String tipoVehiculo, Double tarifaPorMinuto) {
+    public Tarifa(Long id, Vehiculo vehiculo, Double tarifaPorMinuto) {
         this.id = id;
-        this.tipoVehiculo = tipoVehiculo;
+        this.vehiculo = vehiculo;
         this.tarifaPorMinuto = tarifaPorMinuto;
     }
 
@@ -28,12 +34,12 @@ public class Tarifa {
         this.id = id;
     }
 
-    public String getTipoVehiculo() {
-        return tipoVehiculo;
+    public Vehiculo getVehiculo() {
+        return vehiculo;
     }
 
-    public void setTipoVehiculo(String tipoVehiculo) {
-        this.tipoVehiculo = tipoVehiculo;
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
     }
 
     public Double getTarifaPorMinuto() {
@@ -48,7 +54,7 @@ public class Tarifa {
     public String toString() {
         return "Tarifa{" +
                 "id=" + id +
-                ", tipoVehiculo='" + tipoVehiculo + '\'' +
+                ", vehiculo=" + vehiculo +
                 ", tarifaPorMinuto=" + tarifaPorMinuto +
                 '}';
     }

@@ -13,10 +13,13 @@ public class Piso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String tipoVehiculo;
     private int espaciosTotales;
     private int espaciosDisponibles;
     private int capacidadTotal;
+
+    @ManyToOne
+    @JoinColumn(name = "vehiculo_id")
+    private Vehiculo vehiculo;
 
     public Piso() {
     }
@@ -59,13 +62,6 @@ public class Piso {
         this.id = id;
     }
 
-    public String getTipoVehiculo() {
-        return tipoVehiculo;
-    }
-
-    public void setTipoVehiculo(String tipoVehiculo) {
-        this.tipoVehiculo = tipoVehiculo;
-    }
 
     public int getEspaciosTotales() {
         return espaciosTotales;
