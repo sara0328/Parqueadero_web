@@ -12,7 +12,7 @@ public class Vehiculo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String tipo; // AUTOMOVIL, BUS, MOTO
+    private TipoVehiculo tipo; // AUTOMOVIL, BUS, MOTO
     private String descripcion;
 
     @ManyToOne
@@ -24,7 +24,7 @@ public class Vehiculo {
 
     public Vehiculo(Long id, String tipo, String descripcion) {
         this.id = id;
-        this.tipo = tipo;
+        this.tipo = TipoVehiculo.valueOf(tipo.toUpperCase());
         this.descripcion = descripcion;
     }
 
@@ -35,11 +35,11 @@ public class Vehiculo {
 
 
     public String getTipo() {
-        return tipo;
+        return tipo.toString();
     }
 
     public void setTipo(String tipo) {
-        this.tipo = tipo;
+        this.tipo = TipoVehiculo.valueOf(tipo.toUpperCase());
     }
 
     public String getDescripcion() {

@@ -1,5 +1,6 @@
 package com.example.Parqueadero.Controller;
 import com.example.Parqueadero.Model.Piso;
+import com.example.Parqueadero.Model.TipoVehiculo;
 import com.example.Parqueadero.Service.PisoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,8 +38,9 @@ public class PisoController {
     @GetMapping("/crear")
     public ModelAndView crearPiso() {
         Piso piso = new Piso();
-        ModelAndView pisoCreateView = new ModelAndView("crear");
+        ModelAndView pisoCreateView = new ModelAndView("crear_piso");
         pisoCreateView.addObject("piso", piso);
+        pisoCreateView.addObject("tiposVehiculos", TipoVehiculo.values());
         return pisoCreateView;
     }
 

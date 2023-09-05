@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Crear piso</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1>Agregar piso al parqueadero</h1>
+    <hr>
+    <h2>Guardar piso</h2>
+
+    <form action="#" th:action="@{/api/pisos/guardar}" th:object="${piso}"
+          method="POST" >
+        <label> ID: </label>
+        <input type="text" th:field="*{id}" placeholder="ID"
+               class="form-control mb-4 col-4">
+        <label> Espacios totales: </label>
+        <input type="text"
+               th:field="*{espaciosTotales}" placeholder="Espacios Totales"
+               class="form-control mb-4 col-4">
+        <label> Tipo de vehiculo: </label>
+        <select name="tipoVehiculo" class="form-control mb-4 col-4" th:field="*{tarifa.tipoVehiculo}">
+            <option th:each="tipoOpt : ${tiposVehiculos}"
+                    th:value="${tipoOpt}"
+                    th:text="${tipoOpt}">
+            </option>
+        </select>
+
+        <button type="submit" class="btn btn-info col-2">Guardar
+            Piso
+        </button>
+    </form>
+
+    <hr>
+
+    <a th:href="@{api/pisos/}"> Volver a la lista de pisos</a>
+</div>
+</body>
+</html>

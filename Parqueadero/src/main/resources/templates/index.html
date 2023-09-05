@@ -13,19 +13,22 @@
 
     <h3>Lista de pisos</h3>
     <a th:href="@{/api/pisos/crear}" class="btn btn-primary btn-sm mb-3" >Crear Piso</a>
+    <a th:href="@{/api/tarifas}" class="btn btn-primary btn-sm mb-3" >Crear tarifa</a>
     <table style="width:80%" border="1"
            class = "table table-striped table-responsive-md">
         <thead>
         <tr>
             <th>ID</th>
-            <th>Tipo Vehiculo</th>
-            <th>Espacios disponibles</th>
+            <th>Tipo de vehiculo</th>
+            <th>Espacios totales</th>
+            <th>Acciones</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="piso:${allpisoslist}">
             <td th:text="${piso.id}"></td>
-            <td th:text="${piso.tipoVehiculo}"></td>
+            <td th:text="${piso.tarifa.tipoVehiculo}"></td>
+            <td th:text="${piso.espaciosTotales}"></td>
             <td> <a th:href="@{/obtenerPiso/{id}(id=${piso.id})}"
                     class="btn btn-primary">Update</a>
                 <a th:href="@{/eliminarPiso/{id}(id=${piso.id})}"

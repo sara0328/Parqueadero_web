@@ -20,8 +20,10 @@ public class Piso {
     private int capacidadTotal;
     private Integer capacidadMaxima; // Nueva propiedad
     private int espaciosDisponibles;
-
-     @OneToMany(mappedBy = "piso")
+    @ManyToOne
+    @JoinColumn(name = "tarifa_id")
+    private Tarifa tarifa;
+    @OneToMany(mappedBy = "piso")
     private List<Vehiculo> vehiculos;  // Lista de vehículos en este piso
 
     // Constructor con todos los campos necesarios
@@ -34,6 +36,7 @@ public class Piso {
     }
 
     public Piso() {
+
     }
 
     // un constructor con argumentos
@@ -48,9 +51,6 @@ public class Piso {
     public void setCapacidadTotal(int capacidadTotal) {
         this.capacidadTotal = capacidadTotal;
     }
-    @ManyToOne
-    @JoinColumn(name = "tarifa_id")
-    private Tarifa tarifa;
 
     // getters y setters
 
